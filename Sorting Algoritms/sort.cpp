@@ -138,4 +138,85 @@ namespace sort {
 		delete[] upper_part;
 	}
 
+	void Quick(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
+		if (arr_to_sort_size <= 1) {
+			return;
+		}
+
+		const std::size_t array_mid_point = arr_to_sort_size / 2;
+
+		/*
+			Sorting setup (useing first mid and last values):
+			lower value placed at index 0
+			mid value places at last index
+			highest values places at mid index
+
+			mid and highest indexes will be swaped at the end
+		*/
+
+		if (arr_to_sort[array_mid_point] < arr_to_sort[0]) {
+			std::swap(arr_to_sort[array_mid_point], arr_to_sort[0]);
+		}
+
+		if (arr_to_sort[arr_to_sort_size - 1] < arr_to_sort[0]) {
+			std::swap(arr_to_sort[arr_to_sort_size - 1], arr_to_sort[0]);
+		}
+
+		if (arr_to_sort[array_mid_point] < arr_to_sort[arr_to_sort_size - 1]) {
+			std::swap(arr_to_sort[array_mid_point], arr_to_sort[arr_to_sort_size - 1]);
+		}
+
+		/* Sorting time */
+		int const pivot_value = arr_to_sort[arr_to_sort_size - 1];
+		signed int lower_value_search_index{ static_cast<signed int>(arr_to_sort_size) - 2 };
+		signed int higher_value_search_index{};
+
+		while (true) {
+
+			/* Search for highest value from left */
+			while (higher_value_search_index < (arr_to_sort_size - 1)) {
+
+				if (arr_to_sort[higher_value_search_index] > pivot_value) {
+					break;
+				}
+
+				higher_value_search_index++;
+			}
+
+			/* Search for lowest value from right */
+			while (lower_value_search_index) {
+
+				if (arr_to_sort[lower_value_search_index] < pivot_value) {
+					break;
+				}
+
+
+
+				lower_value_search_index--;
+			}
+
+			/* Swap if found */
+			if (higher_value_search_index < lower_value_search_index) {
+				std::swap(arr_to_sort[higher_value_search_index], arr_to_sort[lower_value_search_index]);
+				continue;
+			}
+
+			break;
+		}
+
+
+		if (higher_value_search_index == arr_to_sort_size) {
+			return /* Already sorted */;
+		}
+
+		/* Swap back pivot */
+		int* const higher_value_search_address = arr_to_sort + higher_value_search_index;
+		std::swap(arr_to_sort[higher_value_search_index], arr_to_sort[arr_to_sort_size - 1]);
+
+		/* Sort unsorted things recursively */
+		Quick(arr_to_sort, higher_value_search_index);
+		Quick(arr_to_sort + higher_value_search_index + 1, arr_to_sort_size - higher_value_search_index - 1);
+
+	}
+
 }

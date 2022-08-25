@@ -9,5 +9,6 @@ namespace sort {
 	void Heap(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 	void Insertion(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 	void Merge(int* const arr_to_sort, const std::size_t arr_to_sort_size);
+	void Quick(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 
 }
