@@ -68,4 +68,18 @@ namespace sort {
 
 	}
 
+	void Insertion(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
+		for (std::size_t sorted_boundary{ 1 }; sorted_boundary < arr_to_sort_size; sorted_boundary++) {
+
+			for (std::size_t scanner_index{ sorted_boundary }; scanner_index; scanner_index--) {
+
+				if (arr_to_sort[scanner_index] > arr_to_sort[scanner_index - 1]) {
+					break;
+				}
+
+				std::swap(arr_to_sort[scanner_index - 1], arr_to_sort[scanner_index]);
+			}
+		}
+	}
+
 }
