@@ -11,5 +11,5 @@ namespace sort {
 	void Merge(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 	void Quick(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 	void Radix(int* const arr_to_sort, const std::size_t arr_to_sort_size);
-
+	void Selection(int* const arr_to_sort, const std::size_t arr_to_sort_size);
 }
