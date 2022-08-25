@@ -219,4 +219,32 @@ namespace sort {
 
 	}
 
+	void Radix(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
+		std::size_t largest_digit_amount{};
+
+		for (std::size_t i{}; i < arr_to_sort_size; i++) {
+			std::size_t current_num_digits_amount{};
+
+			while (true) {
+				int digit_count_divider = static_cast<int>(pow(10.0, static_cast<double>(current_num_digits_amount)));
+
+				if (floor((arr_to_sort[i] / digit_count_divider)) == 0.0) {
+					break;
+				}
+
+				current_num_digits_amount++;
+			}
+
+			if (current_num_digits_amount <= largest_digit_amount) {
+				continue;
+			}
+
+			largest_digit_amount = current_num_digits_amount;
+		}
+
+		for (std::size_t i{}; i < largest_digit_amount; i++) {
+			CountingSortWidthDigitAtIndex(arr_to_sort, arr_to_sort_size, static_cast<int>(i));
+		}
+	}
+
 }
