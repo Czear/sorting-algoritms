@@ -82,4 +82,60 @@ namespace sort {
 		}
 	}
 
+	void Merge(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
+		if (arr_to_sort_size == 1) {
+			return;
+		}
+
+		/* Create subarrays */
+		const std::size_t lower_part_size = arr_to_sort_size / 2;
+		const std::size_t upper_part_size = arr_to_sort_size - lower_part_size;
+
+
+		int* lower_part = new int[lower_part_size];
+		int* upper_part = new int[upper_part_size];
+
+		/* Fill subarrays with data */
+		for (std::size_t i{}; i < arr_to_sort_size; i++) {
+			bool use_lower_part_arr = (i < lower_part_size);
+			int* array_to_fill = use_lower_part_arr ? lower_part : upper_part;
+			std::size_t index_to_update = use_lower_part_arr ? i : i - lower_part_size;
+
+			int* address_to_override = array_to_fill + index_to_update;
+
+			*address_to_override = arr_to_sort[i];
+		}
+
+		/* Sort sub arrays */
+		Merge(lower_part, lower_part_size);
+		Merge(upper_part, upper_part_size);
+
+		/* Update input array with sorted data */
+		std::size_t lower_part_index{};
+		std::size_t upper_part_index{};
+
+		while (lower_part_index < lower_part_size && upper_part_index < upper_part_size) {
+			bool get_next_value_from_lower_part_vector = lower_part[lower_part_index] <= upper_part[upper_part_index];
+
+			arr_to_sort[lower_part_index + upper_part_index] = get_next_value_from_lower_part_vector ? lower_part[lower_part_index] : upper_part[upper_part_index];
+
+			(get_next_value_from_lower_part_vector ? lower_part_index : upper_part_index)++;
+		}
+
+		/* Use unfinished array */
+		bool is_lower_vector_unfinished = lower_part_index != lower_part_size;
+		int* unfinished_vector = is_lower_vector_unfinished ? lower_part : upper_part;
+		const std::size_t* unfinished_vector_size = is_lower_vector_unfinished ? &lower_part_size : &upper_part_size;
+		std::size_t* unfinished_counter = is_lower_vector_unfinished ? &lower_part_index : &upper_part_index;
+
+		while ((*unfinished_counter) < (*unfinished_vector_size)) {
+			arr_to_sort[lower_part_index + upper_part_index] = unfinished_vector[*unfinished_counter];
+			(*unfinished_counter)++;
+		}
+
+		/* Clear sub arrays from memory */
+		delete[] lower_part;
+		delete[] upper_part;
+	}
+
 }
