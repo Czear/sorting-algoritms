@@ -1,5 +1,33 @@
 #include "sort_tool.h"
 
+void ArrToMaxHeap(int* const arr_to_max_heap, const std::size_t arr_to_max_heap_size) {
+	for (std::size_t i{}; i < arr_to_max_heap_size; i++) {
+
+		std::size_t current_value_index, parent_node_index;
+
+		current_value_index = parent_node_index = i;
+
+		BinaryTreeGoOneNodeIndexUp(parent_node_index);
+
+		while (arr_to_max_heap[parent_node_index] < arr_to_max_heap[current_value_index]) {
+			std::swap(arr_to_max_heap[parent_node_index], arr_to_max_heap[current_value_index]);
+
+			current_value_index = parent_node_index;
+			BinaryTreeGoOneNodeIndexUp(parent_node_index);
+		}
+	}
+}
+
+void BinaryTreeGoOneNodeIndexUp(std::size_t& index) {
+	if (!index) {
+		return;
+	}
+
+	index = static_cast<std::size_t>(
+		floor(static_cast<double>(index - 1) / 2.0)
+	);
+}
+
 int GetDigitAtIndex(int input_num, int digit_index) {
 	int modulo_divider = static_cast<int>(pow(10.0, 1.0 + digit_index));
 	double input_one_digit_fraction = (input_num % modulo_divider) / pow(10.0, digit_index);
