@@ -1,4 +1,5 @@
 #include "sort.h"
+#include "sort_tool.h"
 
 namespace sort {
 	void Bubble(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
@@ -14,4 +15,9 @@ namespace sort {
 
 		}
 	}
+
+	void Counting(int* const arr_to_sort, const std::size_t arr_to_sort_size) {
+		CountingSortWidthDigitAtIndex(arr_to_sort, arr_to_sort_size);
+	}
+
 }
